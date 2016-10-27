@@ -222,6 +222,17 @@ function checkTransformation() {
 	compareFiles "$EXPECTED" "$OUTPUT"
 }
 
+function checkJson() {
+	INPUT="tests/test-files/$1"
+	OUTPUT="formatted.json"
+	EXPECTED="tests/test-files/${1%.*}.json"
+
+	echo
+	echo "## ${1%.*}.json"
+	time cat "$INPUT" | "$ELM_FORMAT" --stdin --json | python -mjson.tool > "$OUTPUT"
+	returnCodeShouldEqual 0
+	compareFiles "$EXPECTED" "$OUTPUT"
+}
 
 echo
 echo
@@ -277,6 +288,8 @@ checkTransformation 0.18 Elm-0.18/PrimesBecomeUnderscores.elm
 checkTransformation 0.18 Elm-0.18/RangesBecomeListRange.elm
 checkTransformation 0.18 Elm-0.18/BackticksBecomeFunctionCalls.elm
 checkTransformation 0.18 Elm-0.18/SpecialBackticksBecomePipelines.elm
+
+checkJson good/AllSyntax/0.16/Expressions.elm
 
 echo
 echo "# GREAT SUCCESS!"
