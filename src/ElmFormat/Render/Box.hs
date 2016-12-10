@@ -350,7 +350,7 @@ formatModule elmVersion modu =
             (DComment, DComment) ->
               []
             (_, DComment) ->
-              List.replicate 3 blankLine
+              List.replicate 2 blankLine
             (DComment, _) ->
               List.replicate 2 blankLine
             (DDocComment, DDefinition _) ->
